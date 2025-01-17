@@ -15,37 +15,37 @@
   </mat-form-field>
 
   <mat-table [dataSource]="starships" class="mat-elevation-z8">
-    <!-- Coluna: Name -->
+
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
       <mat-cell *matCellDef="let starship">{{ starship.name }}</mat-cell>
     </ng-container>
 
-    <!-- Coluna: Model -->
+
     <ng-container matColumnDef="model">
       <mat-header-cell *matHeaderCellDef>Model</mat-header-cell>
       <mat-cell *matCellDef="let starship">{{ starship.model }}</mat-cell>
     </ng-container>
 
-    <!-- Coluna: Class -->
+
     <ng-container matColumnDef="class">
       <mat-header-cell *matHeaderCellDef>Class</mat-header-cell>
       <mat-cell *matCellDef="let starship">{{ starship.class }}</mat-cell>
     </ng-container>
 
-    <!-- Coluna: Length -->
+
     <ng-container matColumnDef="length">
       <mat-header-cell *matHeaderCellDef>Length</mat-header-cell>
       <mat-cell *matCellDef="let starship">{{ starship.length }}</mat-cell>
     </ng-container>
 
-    <!-- Coluna: Manufacturers -->
+
     <ng-container matColumnDef="manufacturer">
       <mat-header-cell *matHeaderCellDef>Manufacturers</mat-header-cell>
       <mat-cell *matCellDef="let starship">{{ starship.manufacturer.join(', ') }}</mat-cell>
     </ng-container>
 
-    <!-- Cabeçalho e Linhas -->
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row
       *matRowDef="let row; columns: displayedColumns;"
@@ -64,7 +64,6 @@
   >
   </mat-paginator>
 
-  <!-- Detalhes do Starship -->
   <div *ngIf="starshipDetails" class="starship-details mt-4">
     <h2>Starship Details</h2>
     <p><strong>Name:</strong> {{ starshipDetails.name }}</p>
