@@ -13,22 +13,23 @@
 
 .custom-table th,
 .custom-table td {
-  border: 1px solid #ccc; /* Bordas ao redor das células */
-  padding: 12px; /* Espaçamento interno */
+  border: 1px solid #ccc;
+  padding: 12px;
 }
 
 .custom-table th {
-  background-color: #f8f8f8; /* Fundo do cabeçalho */
+  background-color: #f8f8f8;
   font-weight: bold;
 }
 
 .custom-table tr:nth-child(even) {
-  background-color: #f9f9f9; /* Listras para linhas pares */
+  background-color: #f9f9f9;
 }
 
 .custom-table tr:hover {
-  background-color: #f1f1f1; /* Fundo ao passar o mouse */
+  background-color: #f1f1f1;
 }
+
 .custom-select {
   display: block;
   margin: 20px auto;
