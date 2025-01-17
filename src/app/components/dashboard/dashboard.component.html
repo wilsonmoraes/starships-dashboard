@@ -1,5 +1,8 @@
 <div class="container">
-  <h1 class="text-center">Starships Dashboard</h1>
+  <div class="header">
+    <h1 class="text-center">Starships Dashboard</h1>
+    <button class="btn btn-danger float-right" (click)="logout()">Logout</button>
+  </div>
 
   <mat-form-field appearance="fill" class="filter-field">
     <mat-label>Filter by Manufacturer</mat-label>
@@ -12,36 +15,46 @@
   </mat-form-field>
 
   <mat-table [dataSource]="starships" class="mat-elevation-z8">
+    <!-- Coluna: Name -->
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
       <mat-cell *matCellDef="let starship">{{ starship.name }}</mat-cell>
     </ng-container>
 
+    <!-- Coluna: Model -->
     <ng-container matColumnDef="model">
       <mat-header-cell *matHeaderCellDef>Model</mat-header-cell>
       <mat-cell *matCellDef="let starship">{{ starship.model }}</mat-cell>
     </ng-container>
 
+    <!-- Coluna: Class -->
     <ng-container matColumnDef="class">
       <mat-header-cell *matHeaderCellDef>Class</mat-header-cell>
       <mat-cell *matCellDef="let starship">{{ starship.class }}</mat-cell>
     </ng-container>
 
+    <!-- Coluna: Length -->
     <ng-container matColumnDef="length">
       <mat-header-cell *matHeaderCellDef>Length</mat-header-cell>
       <mat-cell *matCellDef="let starship">{{ starship.length }}</mat-cell>
     </ng-container>
 
+    <!-- Coluna: Manufacturers -->
     <ng-container matColumnDef="manufacturer">
       <mat-header-cell *matHeaderCellDef>Manufacturers</mat-header-cell>
-      <mat-cell *matCellDef="let starship">
-        {{ starship.manufacturer.join(', ') }}
-      </mat-cell>
+      <mat-cell *matCellDef="let starship">{{ starship.manufacturer.join(', ') }}</mat-cell>
     </ng-container>
 
+    <!-- Cabeçalho e Linhas -->
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns;"
+      (click)="viewDetails(row.id)"
+      class="clickable-row"
+    >
+    </mat-row>
   </mat-table>
+
 
   <mat-paginator
     [length]="totalItems"
@@ -50,4 +63,25 @@
     (page)="onPageChange($event)"
   >
   </mat-paginator>
+
+  <!-- Detalhes do Starship -->
+  <div *ngIf="starshipDetails" class="starship-details mt-4">
+    <h2>Starship Details</h2>
+    <p><strong>Name:</strong> {{ starshipDetails.name }}</p>
+    <p><strong>Model:</strong> {{ starshipDetails.model }}</p>
+    <p><strong>Class:</strong> {{ starshipDetails.starship_class }}</p>
+    <p><strong>Cost in Credits:</strong> {{ starshipDetails.cost_in_credits || 'Unknown' }}</p>
+    <p><strong>Length:</strong> {{ starshipDetails.length }}</p>
+    <p><strong>Crew:</strong> {{ starshipDetails.crew || 'Unknown' }}</p>
+    <p><strong>Passengers:</strong> {{ starshipDetails.passengers || 'Unknown' }}</p>
+    <p><strong>Max Speed:</strong> {{ starshipDetails.max_atmosphering_speed || 'Unknown' }}</p>
+    <p><strong>Hyperdrive Rating:</strong> {{ starshipDetails.hyperdrive_rating || 'Unknown' }}</p>
+    <p><strong>MGLT:</strong> {{ starshipDetails.MGLT || 'Unknown' }}</p>
+    <p><strong>Cargo Capacity:</strong> {{ starshipDetails.cargo_capacity || 'Unknown' }}</p>
+    <p><strong>Consumables:</strong> {{ starshipDetails.consumables || 'Unknown' }}</p>
+    <p><strong>Manufacturers:</strong> {{ starshipDetails.manufacturers.join(', ') }}</p>
+    <p><strong>Created At:</strong> {{ starshipDetails.created_at }}</p>
+    <p><strong>Edited At:</strong> {{ starshipDetails.edited_at }}</p>
+    <p><strong>API URL:</strong> <a [href]="starshipDetails.url" target="_blank">{{ starshipDetails.url }}</a></p>
+  </div>
 </div>

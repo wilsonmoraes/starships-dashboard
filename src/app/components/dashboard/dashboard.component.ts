@@ -8,6 +8,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
+import {AuthService} from '../../services/auth.service';
 
 
 @Component({
@@ -33,11 +34,11 @@ export class DashboardComponent {
   totalItems: number = 0;
   currentPage: number = 1;
   itemsPerPage: number = 10;
+  starshipDetails: any | null = null; // Para exibir os detalhes do starship
 
   displayedColumns: string[] = ['name', 'model', 'class', 'length', 'manufacturer'];
 
-  constructor(private starshipService: StarshipService) {
-  }
+  constructor(private starshipService: StarshipService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.loadManufacturers();
@@ -60,7 +61,7 @@ export class DashboardComponent {
   }
 
   onManufacturerChange(): void {
-    this.currentPage = 1; // Reset to first page when manufacturer changes
+    this.currentPage = 1;
     this.loadStarships();
   }
 
@@ -68,5 +69,15 @@ export class DashboardComponent {
     this.currentPage = event.pageIndex + 1;
     this.itemsPerPage = event.pageSize;
     this.loadStarships();
+  }
+
+  viewDetails(starshipId: string): void {
+    this.starshipService.getStarshipDetails(starshipId).subscribe((details) => {
+      this.starshipDetails = details;
+    });
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }
