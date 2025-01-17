@@ -27,7 +27,7 @@ export class LoginComponent {
   async onLogin(): Promise<void> {
     const success = await this.authService.login(this.username, this.password);
     if (success) {
-      this.router.navigate(['/dashboard']);
+      await this.router.navigate(['/dashboard']);
     } else {
       this.errorMessage = 'Invalid username or password';
     }
