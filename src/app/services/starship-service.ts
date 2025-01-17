@@ -15,10 +15,11 @@ export class StarshipService {
     return this.http.get(`${this.baseUrl}/manufacturers`);
   }
 
-  getStarships(manufacturerId?: string): Observable<any> {
-    const url = manufacturerId
-      ? `${this.baseUrl}/starships?manufacturer_id=${manufacturerId}`
-      : `${this.baseUrl}/starships`;
+  getStarships(manufacturerId?: string, page: number = 1, limit: number = 10): Observable<any> {
+    let url = `${this.baseUrl}/starships?page=${page}&limit=${limit}`;
+    if (manufacturerId) {
+      url += `&manufacturer_id=${manufacturerId}`;
+    }
     return this.http.get(url);
   }
 }

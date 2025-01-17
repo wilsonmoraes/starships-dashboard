@@ -1,56 +1,53 @@
 <div class="container">
-  <mat-card>
-    <h1 class="title">Starships Dashboard</h1>
+  <h1 class="text-center">Starships Dashboard</h1>
 
-    <mat-form-field appearance="fill" class="filter-field">
-      <mat-label>Filter by Manufacturer</mat-label>
-      <mat-select
-        [(ngModel)]="selectedManufacturer"
-        (selectionChange)="onManufacturerChange()"
-      >
-        <mat-option value="">All Manufacturers</mat-option>
-        <mat-option *ngFor="let manufacturer of manufacturers" [value]="manufacturer.id">
-          {{ manufacturer.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+  <mat-form-field appearance="fill" class="filter-field">
+    <mat-label>Filter by Manufacturer</mat-label>
+    <mat-select [(ngModel)]="selectedManufacturer" (selectionChange)="onManufacturerChange()">
+      <mat-option value="">All Manufacturers</mat-option>
+      <mat-option *ngFor="let manufacturer of manufacturers" [value]="manufacturer.id">
+        {{ manufacturer.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
+  <mat-table [dataSource]="starships" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+      <mat-cell *matCellDef="let starship">{{ starship.name }}</mat-cell>
+    </ng-container>
 
-    <mat-table [dataSource]="starships" class="mat-elevation-z8">
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-        <mat-cell *matCellDef="let starship">{{ starship.name }}</mat-cell>
-      </ng-container>
+    <ng-container matColumnDef="model">
+      <mat-header-cell *matHeaderCellDef>Model</mat-header-cell>
+      <mat-cell *matCellDef="let starship">{{ starship.model }}</mat-cell>
+    </ng-container>
 
-      <ng-container matColumnDef="model">
-        <mat-header-cell *matHeaderCellDef>Model</mat-header-cell>
-        <mat-cell *matCellDef="let starship">{{ starship.model }}</mat-cell>
-      </ng-container>
+    <ng-container matColumnDef="class">
+      <mat-header-cell *matHeaderCellDef>Class</mat-header-cell>
+      <mat-cell *matCellDef="let starship">{{ starship.class }}</mat-cell>
+    </ng-container>
 
-      <ng-container matColumnDef="class">
-        <mat-header-cell *matHeaderCellDef>Class</mat-header-cell>
-        <mat-cell *matCellDef="let starship">{{ starship.class }}</mat-cell>
-      </ng-container>
+    <ng-container matColumnDef="length">
+      <mat-header-cell *matHeaderCellDef>Length</mat-header-cell>
+      <mat-cell *matCellDef="let starship">{{ starship.length }}</mat-cell>
+    </ng-container>
 
-      <ng-container matColumnDef="length">
-        <mat-header-cell *matHeaderCellDef>Length</mat-header-cell>
-        <mat-cell *matCellDef="let starship">{{ starship.length }}</mat-cell>
-      </ng-container>
+    <ng-container matColumnDef="manufacturer">
+      <mat-header-cell *matHeaderCellDef>Manufacturers</mat-header-cell>
+      <mat-cell *matCellDef="let starship">
+        {{ starship.manufacturer.join(', ') }}
+      </mat-cell>
+    </ng-container>
 
-      <ng-container matColumnDef="manufacturer">
-        <mat-header-cell *matHeaderCellDef>Manufacturers</mat-header-cell>
-        <mat-cell *matCellDef="let starship">
-          {{ starship.manufacturer.join(', ') }}
-        </mat-cell>
-      </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
-
-    <!-- Mensagem quando não há starships -->
-    <p *ngIf="starships.length === 0" class="no-data">
-      No starships found for the selected manufacturer.
-    </p>
-  </mat-card>
+  <mat-paginator
+    [length]="totalItems"
+    [pageSize]="itemsPerPage"
+    [pageSizeOptions]="[5, 10, 20]"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
 </div>

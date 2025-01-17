@@ -7,6 +7,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
+import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 
 
 @Component({
@@ -21,14 +22,17 @@ import {MatCardModule} from '@angular/material/card';
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCardModule,],
+    MatCardModule,
+    MatPaginatorModule,],
   providers: [StarshipService],
 })
 export class DashboardComponent {
-  filteredManufacturers: any[] = [];
   manufacturers: any[] = [];
   starships: any[] = [];
   selectedManufacturer: string = '';
+  totalItems: number = 0;
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
 
   displayedColumns: string[] = ['name', 'model', 'class', 'length', 'manufacturer'];
 
@@ -48,13 +52,21 @@ export class DashboardComponent {
 
   loadStarships(): void {
     this.starshipService
-      .getStarships(this.selectedManufacturer)
+      .getStarships(this.selectedManufacturer, this.currentPage, this.itemsPerPage)
       .subscribe((data) => {
-        this.starships = data;
+        this.starships = data.starships;
+        this.totalItems = data.total_items;
       });
   }
 
   onManufacturerChange(): void {
+    this.currentPage = 1; // Reset to first page when manufacturer changes
+    this.loadStarships();
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.currentPage = event.pageIndex + 1;
+    this.itemsPerPage = event.pageSize;
     this.loadStarships();
   }
 }
