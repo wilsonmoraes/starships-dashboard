@@ -1,43 +1,56 @@
-<div class="container mt-4 text-center">
-  <h1 class="mb-4">Starships Dashboard</h1>
+<div class="container">
+  <mat-card>
+    <h1 class="title">Starships Dashboard</h1>
 
-  <div class="form-group">
-    <label for="manufacturer">Filter by Manufacturer:</label>
-    <select
-      class="custom-select"
-      id="manufacturer"
-      [(ngModel)]="selectedManufacturer"
-      [ngModelOptions]="{ standalone: true }"
-      (change)="onManufacturerChange()"
-    >
-      <option value="" disabled selected>Select a Manufacturer</option>
-      <option *ngIf="manufacturers.length === 0" disabled>Loading manufacturers...</option>
-      <option *ngFor="let manufacturer of manufacturers" [value]="manufacturer.id">
-        {{ manufacturer.name }}
-      </option>
-    </select>
-  </div>
+    <mat-form-field appearance="fill" class="filter-field">
+      <mat-label>Filter by Manufacturer</mat-label>
+      <mat-select
+        [(ngModel)]="selectedManufacturer"
+        (selectionChange)="onManufacturerChange()"
+      >
+        <mat-option value="">All Manufacturers</mat-option>
+        <mat-option *ngFor="let manufacturer of manufacturers" [value]="manufacturer.id">
+          {{ manufacturer.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <table *ngIf="starships.length > 0" class="custom-table">
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>Model</th>
-      <th>Class</th>
-      <th>Length</th>
-      <th>Manufacturers</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let starship of starships">
-      <td>{{ starship.name }}</td>
-      <td>{{ starship.model }}</td>
-      <td>{{ starship.class }}</td>
-      <td>{{ starship.length }}</td>
-      <td>{{ starship.manufacturer.join(', ') }}</td>
-    </tr>
-    </tbody>
-  </table>
 
-  <p *ngIf="starships.length === 0" class="text-center mt-4">No starships found for the selected manufacturer.</p>
+    <mat-table [dataSource]="starships" class="mat-elevation-z8">
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell *matCellDef="let starship">{{ starship.name }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="model">
+        <mat-header-cell *matHeaderCellDef>Model</mat-header-cell>
+        <mat-cell *matCellDef="let starship">{{ starship.model }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="class">
+        <mat-header-cell *matHeaderCellDef>Class</mat-header-cell>
+        <mat-cell *matCellDef="let starship">{{ starship.class }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="length">
+        <mat-header-cell *matHeaderCellDef>Length</mat-header-cell>
+        <mat-cell *matCellDef="let starship">{{ starship.length }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="manufacturer">
+        <mat-header-cell *matHeaderCellDef>Manufacturers</mat-header-cell>
+        <mat-cell *matCellDef="let starship">
+          {{ starship.manufacturer.join(', ') }}
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <!-- Mensagem quando não há starships -->
+    <p *ngIf="starships.length === 0" class="no-data">
+      No starships found for the selected manufacturer.
+    </p>
+  </mat-card>
 </div>
