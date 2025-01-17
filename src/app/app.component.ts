@@ -13,6 +13,7 @@ import {StarshipService} from './services/starship-service';
   providers: [StarshipService],
 })
 export class DashboardComponent {
+  filteredManufacturers: any[] = [];
   manufacturers: any[] = [];
   starships: any[] = [];
   selectedManufacturer: string = '';

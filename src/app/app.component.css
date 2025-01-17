@@ -1,0 +1,40 @@
+.container {
+  margin: 0 auto;
+  max-width: 80%;
+}
+
+.custom-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: center;
+}
+
+.custom-table th,
+.custom-table td {
+  border: 1px solid #ccc; /* Bordas ao redor das células */
+  padding: 12px; /* Espaçamento interno */
+}
+
+.custom-table th {
+  background-color: #f8f8f8; /* Fundo do cabeçalho */
+  font-weight: bold;
+}
+
+.custom-table tr:nth-child(even) {
+  background-color: #f9f9f9; /* Listras para linhas pares */
+}
+
+.custom-table tr:hover {
+  background-color: #f1f1f1; /* Fundo ao passar o mouse */
+}
+.custom-select {
+  display: block;
+  margin: 20px auto;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 250px;
+}

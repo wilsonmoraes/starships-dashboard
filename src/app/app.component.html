@@ -1,20 +1,23 @@
-<div class="container mt-4">
-  <h1>Starships Dashboard</h1>
+<div class="container mt-4 text-center">
+  <h1 class="mb-4">Starships Dashboard</h1>
+
   <div class="form-group">
     <label for="manufacturer">Filter by Manufacturer:</label>
     <select
-      class="form-control"
+      class="custom-select"
       id="manufacturer"
       [(ngModel)]="selectedManufacturer"
-      (change)="onManufacturerChange()">
-      <option value="">All Manufacturers</option>
+      (change)="onManufacturerChange()"
+    >
+      <option value="" disabled selected>Select a Manufacturer</option>
+      <option *ngIf="manufacturers.length === 0" disabled>Loading manufacturers...</option>
       <option *ngFor="let manufacturer of manufacturers" [value]="manufacturer.id">
         {{ manufacturer.name }}
       </option>
     </select>
   </div>
 
-  <table class="table table-striped mt-4">
+  <table *ngIf="starships.length > 0" class="custom-table">
     <thead>
     <tr>
       <th>Name</th>
@@ -34,4 +37,6 @@
     </tr>
     </tbody>
   </table>
+
+  <p *ngIf="starships.length === 0" class="text-center mt-4">No starships found for the selected manufacturer.</p>
 </div>
