@@ -9,6 +9,9 @@ import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import {AuthService} from '../../services/auth.service';
+import {MatButton} from '@angular/material/button';
+import {MatDivider} from '@angular/material/divider';
+import {MatToolbar} from '@angular/material/toolbar';
 
 
 @Component({
@@ -24,7 +27,7 @@ import {AuthService} from '../../services/auth.service';
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    MatPaginatorModule,],
+    MatPaginatorModule, MatButton, MatDivider, MatToolbar,],
   providers: [StarshipService],
 })
 export class DashboardComponent {
